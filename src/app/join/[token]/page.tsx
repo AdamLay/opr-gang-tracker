@@ -52,29 +52,23 @@ export default async function JoinPage({ params }: JoinPageProps) {
         ) : (
           <form action={joinCampaign} className="space-y-4">
             <div className="form-control">
-              <label className="label">
+              <label className="label mb-2">
                 <span className="label-text">Your Name</span>
               </label>
               <input
                 type="text"
                 name="name"
                 required
-                className="input input-bordered w-full"
+                className="input w-full"
                 placeholder="Enter your name"
               />
             </div>
 
             <div className="form-control">
-              <label className="label">
+              <label className="label mb-2">
                 <span className="label-text">Army List URL</span>
               </label>
-              <input
-                type="url"
-                name="listUrl"
-                required
-                className="input input-bordered w-full"
-                placeholder="https://..."
-              />
+              <input type="url" name="listUrl" required className="input w-full" placeholder="https://..." />
             </div>
 
             <button type="submit" className="btn btn-primary w-full">

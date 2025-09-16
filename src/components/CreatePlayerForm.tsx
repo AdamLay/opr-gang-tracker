@@ -36,7 +36,7 @@ export default function CreatePlayerForm({ campaignId, onPlayerCreated }: Create
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <div className="form-control">
-        <label htmlFor="playerName" className="label">
+        <label htmlFor="playerName" className="label mb-2">
           <span className="label-text">Player Name</span>
         </label>
         <input
@@ -45,12 +45,12 @@ export default function CreatePlayerForm({ campaignId, onPlayerCreated }: Create
           value={name}
           onChange={(e) => setName(e.target.value)}
           required
-          className="input input-bordered w-full"
+          className="input w-full"
           disabled={isLoading}
         />
       </div>
       <div className="form-control">
-        <label htmlFor="listUrl" className="label">
+        <label htmlFor="listUrl" className="label mb-2">
           <span className="label-text">List URL</span>
         </label>
         <input
@@ -59,7 +59,7 @@ export default function CreatePlayerForm({ campaignId, onPlayerCreated }: Create
           value={listUrl}
           onChange={(e) => setListUrl(e.target.value)}
           required
-          className="input input-bordered w-full"
+          className="input w-full"
           disabled={isLoading}
           placeholder="https://..."
         />

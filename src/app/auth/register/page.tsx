@@ -9,13 +9,13 @@ interface RegisterPageProps {
 
 export default function RegisterPage({ searchParams }: RegisterPageProps) {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen flex justify-center py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8">
         <div>
-          <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">Create your account</h2>
-          <p className="mt-2 text-center text-sm text-gray-600">
+          <h2 className="mt-6 text-center text-3xl font-extrabold">Create your account</h2>
+          <p className="mt-2 text-center text-sm">
             Or{" "}
-            <Link href="/auth/login" className="font-medium text-blue-600 hover:text-blue-500">
+            <Link href="/auth/login" className="font-medium text-primary">
               sign in to your existing account
             </Link>
           </p>
@@ -27,10 +27,10 @@ export default function RegisterPage({ searchParams }: RegisterPageProps) {
           </div>
         )}
 
-        <form className="mt-8 space-y-6" action={registerAction}>
+        <form className="card-1 mt-8 space-y-6" action={registerAction}>
           <div className="space-y-4">
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+              <label htmlFor="email" className="block text-sm font-medium mb-2">
                 Email address
               </label>
               <input
@@ -39,12 +39,12 @@ export default function RegisterPage({ searchParams }: RegisterPageProps) {
                 type="email"
                 autoComplete="email"
                 required
-                className="mt-1 appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
+                className="input w-full"
                 placeholder="Enter your email"
               />
             </div>
             <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+              <label htmlFor="password" className="block text-sm font-medium mb-2">
                 Password
               </label>
               <input
@@ -54,24 +54,21 @@ export default function RegisterPage({ searchParams }: RegisterPageProps) {
                 autoComplete="new-password"
                 required
                 minLength={6}
-                className="mt-1 appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
+                className="input w-full"
                 placeholder="Enter your password (min 6 characters)"
               />
             </div>
           </div>
 
           <div>
-            <button
-              type="submit"
-              className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-            >
+            <button type="submit" className="btn btn-primary w-full">
               Create account
             </button>
           </div>
         </form>
 
         <div className="text-center">
-          <Link href="/" className="text-sm text-blue-600 hover:text-blue-500">
+          <Link href="/" className="text-sm text-muted">
             ← Back to home
           </Link>
         </div>

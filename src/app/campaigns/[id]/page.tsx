@@ -51,7 +51,7 @@ export default async function CampaignPage({ params }: CampaignPageProps) {
         </div>
       </div>
 
-      <div className="grid md:grid-cols-2 gap-8">
+      <div className="grid md:grid-cols-2 gap-8 items-start">
         <div className="flex flex-col gap-4">
           <div>
             {/* <h2 className="text-xl font-semibold mb-4">Players ({campaign.players.length})</h2> */}
@@ -83,6 +83,7 @@ export default async function CampaignPage({ params }: CampaignPageProps) {
                           {/* <p className="text-sm text-gray-600 mt-1">
                             Added: {new Date(player.createdAt).toLocaleDateString()}
                           </p> */}
+                          <p className="text-info">Games won: {gamesWon}</p>
                           <div className="flex gap-4 mt-1">
                             <p className="text-sm text-success">Total VP: {vp}</p>
                             <p className="text-sm text-warning">Points: {points}</p>

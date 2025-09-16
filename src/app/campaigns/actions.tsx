@@ -7,6 +7,7 @@ import { createClient } from "@/lib/supabase/server";
 import {
   createCampaign as dbCreateCampaign,
   getAllCampaigns as dbGetAllCampaigns,
+  getAllCampaignsWithAccess as dbGetAllCampaignsWithAccess,
   getCampaign as dbGetCampaign,
   getCampaignWithAccess as dbGetCampaignWithAccess,
   updateCampaign as dbUpdateCampaign,
@@ -63,8 +64,15 @@ export async function createCampaignAction(data: CreateCampaignData) {
 export async function getCampaignsAction() {
   try {
     const user = await getAuthenticatedUser();
-    const campaigns = await dbGetAllCampaigns(user.id);
-    return { success: true, data: campaigns };
+    const campaigns = await dbGetAllCampaignsWithAccess(user.id);
+
+    // Add ownership information to each campaign
+    const campaignsWithOwnership = campaigns.map((campaign) => ({
+      ...campaign,
+      isOwner: campaign.userId === user.id,
+    }));
+
+    return { success: true, data: campaignsWithOwnership };
   } catch (error) {
     console.error("Error fetching campaigns:", error);
     return { success: false, error: "Failed to fetch campaigns" };

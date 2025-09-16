@@ -24,7 +24,7 @@ export default function InviteLinkSection({ inviteToken }: InviteLinkSectionProp
   return (
     <div className="card-1">
       <h3 className="text-lg font-semibold mb-3">Invite Players</h3>
-      <p className="text-sm text-gray-600 mb-3">Share this link to let others join your campaign:</p>
+      <p className="text-sm mb-3 text-base-content/70">Share this link to let others join your campaign:</p>
       <div className="flex gap-2">
         <input type="text" value={inviteLink} readOnly className="input input-bordered flex-1 text-sm" />
         <button onClick={copyToClipboard} className={`btn ${copied ? "btn-success" : "btn-primary"}`}>

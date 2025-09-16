@@ -76,13 +76,13 @@ export default function GameTimeline({ games }: GameTimelineProps) {
                         </span>
                         <span className="badge badge-sm">Game #{sortedGames.length - index}</span>
                       </div>
-                      <time className="text-sm text-gray-500">
+                      <time className="text-sm text-muted">
                         {gameDate.toLocaleDateString()} at{" "}
                         {gameDate.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
                       </time>
                     </div>
 
-                    <div className="text-sm text-gray-600">
+                    <div className="text-sm">
                       <strong>Players:</strong> {playerNames.join(", ")}
                     </div>
 

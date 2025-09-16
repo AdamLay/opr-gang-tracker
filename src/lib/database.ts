@@ -131,6 +131,27 @@ export async function getAllCampaigns(userId: string) {
   });
 }
 
+export async function getAllCampaignsWithAccess(userId: string) {
+  return await prisma.campaign.findMany({
+    where: {
+      OR: [
+        { userId: userId }, // Campaigns owned by the user
+        {
+          players: {
+            some: { userId: userId }, // Campaigns where user is a player
+          },
+        },
+      ],
+    },
+    include: {
+      players: true,
+    },
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
+}
+
 export async function updateCampaign(id: string, userId: string, data: UpdateCampaignData) {
   // First check if the campaign belongs to the user
   const campaign = await prisma.campaign.findFirst({
