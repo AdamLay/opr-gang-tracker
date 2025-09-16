@@ -48,6 +48,10 @@ export async function getCampaign(id: string, userId: string) {
       games: {
         include: {
           winner: true,
+          players: { include: { player: true } },
+        },
+        orderBy: {
+          createdAt: "desc",
         },
       },
     },
@@ -73,6 +77,10 @@ export async function getCampaignWithAccess(id: string, userId: string) {
       games: {
         include: {
           winner: true,
+          players: { include: { player: true } },
+        },
+        orderBy: {
+          createdAt: "desc",
         },
       },
     },

@@ -19,10 +19,8 @@ export default async function CampaignsPage() {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <h1 className="text-2xl font-bold mb-6">Gang War Campaigns</h1>
-
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
-        <div className="mb-8">
+        <div className="card-1">
           <h2 className="text-xl font-semibold mb-4">Create New Campaign</h2>
           <CreateCampaignForm />
         </div>
@@ -34,7 +32,7 @@ export default async function CampaignsPage() {
           ) : (
             <div className="grid gap-4">
               {campaigns.map((campaign) => (
-                <div key={campaign.id} className="border rounded-lg p-4">
+                <div key={campaign.id} className="card-1">
                   <div className="flex justify-between items-start">
                     <div>
                       <h3 className="text-lg font-medium">{campaign.name}</h3>
@@ -45,10 +43,7 @@ export default async function CampaignsPage() {
                         Created: {new Date(campaign.createdAt).toLocaleDateString()}
                       </p>
                     </div>
-                    <Link
-                      href={`/campaigns/${campaign.id}`}
-                      className="bg-blue-600 text-white px-3 py-1 rounded text-sm hover:bg-blue-700"
-                    >
+                    <Link href={`/campaigns/${campaign.id}`} className="btn btn-info btn-sm">
                       View Details
                     </Link>
                   </div>

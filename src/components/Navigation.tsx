@@ -8,7 +8,7 @@ export default function Navigation() {
   const { user, loading } = useAuth();
 
   return (
-    <nav className="navbar bg-base-100 shadow-sm border-b">
+    <nav className="navbar bg-base-200 shadow-sm">
       <div className="container mx-auto px-4">
         <div className="navbar-start">
           <Link href="/" className="btn btn-ghost normal-case text-xl" aria-label="Home">

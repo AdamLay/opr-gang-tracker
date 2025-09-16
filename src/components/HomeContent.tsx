@@ -43,7 +43,7 @@ export default function HomeContent() {
       </div>
 
       <div className="mt-12 grid md:grid-cols-2 gap-8">
-        <div className="card bg-base-100 shadow p-6">
+        <div className="card-1">
           <h2 className="card-title mb-4">Features</h2>
           <ul className="space-y-2">
             <li>• Create and manage multiple campaigns</li>
@@ -54,7 +54,7 @@ export default function HomeContent() {
           </ul>
         </div>
 
-        <div className="card bg-base-100 shadow p-6">
+        <div className="card-1">
           <h2 className="card-title mb-4">Getting Started</h2>
           <ol className="space-y-2">
             <li>1. {user ? "Create a new campaign" : "Sign up for an account"}</li>

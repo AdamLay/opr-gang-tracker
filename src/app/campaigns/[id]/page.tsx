@@ -1,15 +1,18 @@
 import CreatePlayerForm from "@/components/CreatePlayerForm";
 import InviteLinkSection from "@/components/InviteLinkSection";
+import GameTimeline from "@/components/GameTimeline";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { deleteCampaignAndRedirectAction, getCampaignAction, createGameAction } from "../actions";
+import { getCampaignAction } from "../actions";
 import AddGameDialog from "@/components/AddGameDialog";
+import { DeleteCampaignButton } from "@/components/DeleteCampaignButton";
 
 interface CampaignPageProps {
   params: { id: string };
 }
 export default async function CampaignPage({ params }: CampaignPageProps) {
-  const result = await getCampaignAction(params.id);
+  const { id } = await params;
+  const result = await getCampaignAction(id);
 
   if (!result.success) {
     if (result.error === "Campaign not found") {
@@ -28,107 +31,89 @@ export default async function CampaignPage({ params }: CampaignPageProps) {
   const campaign = result.data!;
   const isOwner = result.isOwner!;
 
-  // Add Game Dialog State (client component)
-  // DaisyUI modal/dialog pattern
-  // This is a hybrid approach: the dialog and form are rendered client-side
-  // The server action is called via a form action
-
-  async function deleteCampaign(formData: FormData) {
-    "use server";
-    const id = formData.get("id") as string;
-    await deleteCampaignAndRedirectAction(id);
-  }
-
   return (
     <div className="container mx-auto px-4 py-8">
-      {/* Show Add Game Dialog only for owners */}
-      {isOwner && <AddGameDialog campaignId={campaign.id} players={campaign.players} />}
-
       <div className="flex justify-between items-start mb-6">
         <div>
-          <Link href="/campaigns" className="text-blue-600 hover:underline mb-2 inline-block">
+          {/* <Link href="/campaigns" className="text-blue-600 hover:underline mb-2 inline-block">
             ← Back to Campaigns
-          </Link>
+          </Link> */}
           <h1 className="text-3xl font-bold">{campaign.name}</h1>
           <div className="flex items-center gap-2 mt-2">
             <p className="text-gray-600">Created: {new Date(campaign.createdAt).toLocaleDateString()}</p>
             {!isOwner && <span className="badge badge-info">Member</span>}
           </div>
         </div>
-        {/* Show delete button only for owners */}
-        {isOwner && (
-          <form action={deleteCampaign}>
-            <input type="hidden" name="id" value={campaign.id} />
-            <button type="submit" className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700">
-              Delete Campaign
-            </button>
-          </form>
-        )}
+        <div className="flex gap-4">
+          {/* Show delete button only for owners */}
+          {isOwner && <DeleteCampaignButton campaign={campaign} />}
+          <AddGameDialog campaignId={campaign.id} players={campaign.players} />
+        </div>
       </div>
 
       <div className="grid md:grid-cols-2 gap-8">
         <div className="flex flex-col gap-4">
-          {/* Show owner-only sections */}
-          {isOwner && (
-            <>
-              <div className="card bg-base-200 shadow-sm p-4 flex flex-col gap-4">
-                <h2 className="text-xl font-semibold">Add New Player</h2>
-                <CreatePlayerForm campaignId={campaign.id} />
-              </div>
-              <InviteLinkSection inviteToken={campaign.inviteToken} />
-            </>
-          )}
+          <div>
+            {/* <h2 className="text-xl font-semibold mb-4">Players ({campaign.players.length})</h2> */}
+            {campaign.players.length === 0 ? (
+              <p className="text-gray-600">No players yet. Add the first player!</p>
+            ) : (
+              <div className="space-y-3">
+                {campaign.players.map((player) => {
+                  // Calculate VP: 2VP for each game won
+                  const gamesWon = campaign.games
+                    ? campaign.games.filter((game: any) => game.winnerId === player.id).length
+                    : 0;
+                  const vp = gamesWon * 2;
 
-          {/* Show readonly message for non-owners */}
-          {!isOwner && (
-            <div className="card bg-base-100 shadow-sm p-4">
-              <div className="alert alert-info">
-                <span>
-                  You're viewing this campaign as a member. Only the campaign owner can add players and create
-                  games.
-                </span>
-              </div>
-            </div>
-          )}
-        </div>
+                  // Calculate Points: 20pts for wins, 40pts for losses
+                  const gamesPlayed = campaign.games
+                    ? campaign.games.filter((game: any) =>
+                        game.players?.some((gp: any) => gp.player.id === player.id)
+                      ).length
+                    : 0;
+                  const gamesLost = gamesPlayed - gamesWon;
+                  const points = gamesWon * 20 + gamesLost * 40;
 
-        <div>
-          <h2 className="text-xl font-semibold mb-4">Players ({campaign.players.length})</h2>
-          {campaign.players.length === 0 ? (
-            <p className="text-gray-600">No players yet. Add the first player!</p>
-          ) : (
-            <div className="space-y-3">
-              {campaign.players.map((player) => {
-                // Calculate VP: 2VP for each game won
-                const gamesWon = campaign.games
-                  ? campaign.games.filter((game: any) => game.winnerId === player.id).length
-                  : 0;
-                const vp = gamesWon * 2;
-                return (
-                  <div key={player.id} className="border rounded-lg p-4">
-                    <div className="flex justify-between items-start">
-                      <div>
-                        <h3 className="font-medium">{player.name}</h3>
-                        <p className="text-sm text-gray-600 mt-1">
-                          Added: {new Date(player.createdAt).toLocaleDateString()}
-                        </p>
-                        <p className="text-sm text-success mt-1">Total VP: {vp}</p>
+                  return (
+                    <div key={player.id} className="card-1">
+                      <div className="flex justify-between items-start">
+                        <div className="flex flex-col gap-2">
+                          <h3 className="font-medium">{player.name}</h3>
+                          {/* <p className="text-sm text-gray-600 mt-1">
+                            Added: {new Date(player.createdAt).toLocaleDateString()}
+                          </p> */}
+                          <div className="flex gap-4 mt-1">
+                            <p className="text-sm text-success">Total VP: {vp}</p>
+                            <p className="text-sm text-warning">Points: {points}</p>
+                          </div>
+                        </div>
+                        <a
+                          href={player.listUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="btn btn-info btn-sm"
+                        >
+                          View List
+                        </a>
                       </div>
-                      <a
-                        href={player.listUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="bg-blue-600 text-white px-3 py-1 rounded text-sm hover:bg-blue-700"
-                      >
-                        View List
-                      </a>
                     </div>
-                  </div>
-                );
-              })}
+                  );
+                })}
+              </div>
+            )}
+          </div>
+
+          <InviteLinkSection inviteToken={campaign.inviteToken} />
+          {isOwner && (
+            <div className="card-1 flex flex-col gap-4">
+              <h2 className="text-xl font-semibold">Add New Player</h2>
+              <CreatePlayerForm campaignId={campaign.id} />
             </div>
           )}
         </div>
+
+        <GameTimeline games={campaign.games} />
       </div>
     </div>
   );

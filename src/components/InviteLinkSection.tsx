@@ -22,7 +22,7 @@ export default function InviteLinkSection({ inviteToken }: InviteLinkSectionProp
   };
 
   return (
-    <div className="card bg-base-200 shadow-sm p-4 mb-6">
+    <div className="card-1">
       <h3 className="text-lg font-semibold mb-3">Invite Players</h3>
       <p className="text-sm text-gray-600 mb-3">Share this link to let others join your campaign:</p>
       <div className="flex gap-2">

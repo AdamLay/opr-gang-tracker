@@ -19,6 +19,8 @@ export default function AddGameDialog({ campaignId, players }: AddGameDialogProp
     setSelectedPlayers((prev) => (checked ? [...prev, id] : prev.filter((pid) => pid !== id)));
   };
 
+  const valid = Boolean(winnerId) && selectedPlayers.length > 0;
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
@@ -30,7 +32,7 @@ export default function AddGameDialog({ campaignId, players }: AddGameDialogProp
     }
     const result = await createGameAction({ campaignId, playerIds: selectedPlayers, winnerId });
     if (result.success) {
-      setMessage("Game added successfully!");
+      setMessage("");
       setSelectedPlayers([]);
       setWinnerId("");
       setOpen(false);
@@ -54,10 +56,10 @@ export default function AddGameDialog({ campaignId, players }: AddGameDialogProp
             <h3 className="font-bold text-lg mb-4">Add Game</h3>
             <form onSubmit={handleSubmit}>
               <div className="form-control mb-4">
-                <label className="label">
+                <label className="label mb-2">
                   <span className="label-text">Players in Game</span>
                 </label>
-                <div className="flex flex-wrap gap-2">
+                <div className="flex flex-col gap-2">
                   {players.map((player) => (
                     <label key={player.id} className="cursor-pointer flex items-center gap-2">
                       <input
@@ -72,7 +74,7 @@ export default function AddGameDialog({ campaignId, players }: AddGameDialogProp
                 </div>
               </div>
               <div className="form-control mb-4">
-                <label className="label">
+                <label className="label mb-2">
                   <span className="label-text">Winner</span>
                 </label>
                 <select
@@ -93,7 +95,7 @@ export default function AddGameDialog({ campaignId, players }: AddGameDialogProp
                 <button type="button" className="btn" onClick={() => setOpen(false)}>
                   Cancel
                 </button>
-                <button type="submit" className="btn btn-primary" disabled={loading}>
+                <button type="submit" className="btn btn-primary" disabled={loading || !valid}>
                   {loading ? "Adding..." : "Add Game"}
                 </button>
               </div>

@@ -28,17 +28,15 @@ export default function CreateCampaignForm() {
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <div className="form-control">
-        <label htmlFor="name" className="label">
-          <span className="label-text">Campaign Name</span>
-        </label>
         <input
           type="text"
           id="name"
           value={name}
           onChange={(e) => setName(e.target.value)}
           required
-          className="input input-bordered w-full"
+          className="input w-full"
           disabled={isLoading}
+          placeholder="Campaign Name"
         />
       </div>
       <button type="submit" disabled={isLoading || !name.trim()} className="btn btn-primary w-full">
