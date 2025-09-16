@@ -16,17 +16,9 @@ interface CampaignListProps {
   title: string;
   campaigns: Campaign[];
   emptyMessage: string;
-  badgeType: "owner" | "member";
 }
 
-export default function CampaignList({ title, campaigns, emptyMessage, badgeType }: CampaignListProps) {
-  const badgeConfig = {
-    owner: { className: "badge badge-primary badge-sm", text: "Owner" },
-    member: { className: "badge badge-info badge-sm", text: "Member" },
-  };
-
-  const badge = badgeConfig[badgeType];
-
+export default function CampaignList({ title, campaigns, emptyMessage }: CampaignListProps) {
   return (
     <div className="card-1">
       <h2 className="text-xl font-semibold mb-4">
@@ -42,14 +34,15 @@ export default function CampaignList({ title, campaigns, emptyMessage, badgeType
                 <div>
                   <div className="flex items-center gap-2">
                     <h3 className="text-lg font-medium">{campaign.name}</h3>
-                    <span className={badge.className}>{badge.text}</span>
                   </div>
-                  <p className="text-sm text-gray-600 mt-1">
-                    {campaign.players.length} player{campaign.players.length !== 1 ? "s" : ""}
-                  </p>
-                  <p className="text-xs text-gray-500 mt-1">
-                    Created: {new Date(campaign.createdAt).toLocaleDateString()}
-                  </p>
+                  <div className="flex gap-4 items-center">
+                    <p className="text-sm mt-1">
+                      {campaign.players.length} player{campaign.players.length !== 1 ? "s" : ""}
+                    </p>
+                    <p className="text-xs text-muted mt-1">
+                      Created: {new Date(campaign.createdAt).toLocaleDateString()}
+                    </p>
+                  </div>
                 </div>
                 <Link href={`/campaigns/${campaign.id}`} className="btn btn-info btn-sm">
                   View Details
@@ -58,16 +51,16 @@ export default function CampaignList({ title, campaigns, emptyMessage, badgeType
 
               {campaign.players.length > 0 && (
                 <div className="mt-3">
-                  <h4 className="text-sm font-medium text-gray-700 mb-2">Players:</h4>
-                  <div className="space-y-1">
+                  <h4 className="text-sm font-medium text-muted mb-2">Players:</h4>
+                  <div className="space-y-2">
                     {campaign.players.map((player) => (
-                      <div key={player.id} className="text-sm text-gray-600 flex justify-between">
+                      <div key={player.id} className="text-sm flex justify-between">
                         <span>{player.name}</span>
                         <a
                           href={player.listUrl}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-blue-600 hover:underline"
+                          className="btn btn-accent btn-xs hover:underline"
                         >
                           View List
                         </a>

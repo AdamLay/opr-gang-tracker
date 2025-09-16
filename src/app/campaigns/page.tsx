@@ -28,12 +28,11 @@ export default async function CampaignsPage() {
             title="My Campaigns"
             campaigns={ownedCampaigns}
             emptyMessage="No campaigns created yet. Create your first one!"
-            badgeType="owner"
           />
 
           {/* Member Campaigns */}
           {memberCampaigns.length > 0 && (
-            <CampaignList title="Member Of" campaigns={memberCampaigns} emptyMessage="" badgeType="member" />
+            <CampaignList title="Member Of" campaigns={memberCampaigns} emptyMessage="" />
           )}
         </div>
 
