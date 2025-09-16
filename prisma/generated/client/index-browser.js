@@ -124,6 +124,7 @@ exports.Prisma.CampaignScalarFieldEnum = {
   id: 'id',
   name: 'name',
   userId: 'userId',
+  inviteToken: 'inviteToken',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };

@@ -54,6 +54,38 @@ export async function getCampaign(id: string, userId: string) {
   });
 }
 
+// Get campaign by invite token (public access)
+export async function getCampaignByInviteToken(inviteToken: string) {
+  return await prisma.campaign.findUnique({
+    where: {
+      inviteToken: inviteToken,
+    },
+    include: {
+      players: true,
+    },
+  });
+}
+
+// Join campaign with invite token (no userId required)
+export async function joinCampaignWithToken(
+  inviteToken: string,
+  playerData: { name: string; listUrl: string }
+) {
+  const campaign = await getCampaignByInviteToken(inviteToken);
+  if (!campaign) {
+    throw new Error("Invalid invite link");
+  }
+
+  return await prisma.player.create({
+    data: {
+      name: playerData.name,
+      listUrl: playerData.listUrl,
+      campaignId: campaign.id,
+      userId: "", // No userId for public joins
+    },
+  });
+}
+
 export async function getAllCampaigns(userId: string) {
   return await prisma.campaign.findMany({
     where: { userId: userId },

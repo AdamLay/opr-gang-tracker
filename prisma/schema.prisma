@@ -16,13 +16,14 @@ datasource db {
 }
 
 model Campaign {
-  id        String   @id @default(cuid())
-  name      String
-  userId    String // Supabase auth user ID
-  players   Player[]
-  games     Game[]
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id          String   @id @default(cuid())
+  name        String
+  userId      String // Supabase auth user ID
+  inviteToken String   @unique @default(cuid()) // Unique token for invite links
+  players     Player[]
+  games       Game[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 
   @@map("campaigns")
 }

@@ -1,4 +1,5 @@
 import CreatePlayerForm from "@/components/CreatePlayerForm";
+import InviteLinkSection from "@/components/InviteLinkSection";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { deleteCampaignAndRedirectAction, getCampaignAction, createGameAction } from "../actions";
@@ -40,6 +41,7 @@ export default async function CampaignPage({ params }: CampaignPageProps) {
   return (
     <div className="container mx-auto px-4 py-8">
       <AddGameDialog campaignId={campaign.id} players={campaign.players} />
+
       <div className="flex justify-between items-start mb-6">
         <div>
           <Link href="/campaigns" className="text-blue-600 hover:underline mb-2 inline-block">
@@ -55,6 +57,8 @@ export default async function CampaignPage({ params }: CampaignPageProps) {
           </button>
         </form>
       </div>
+
+      <InviteLinkSection inviteToken={campaign.inviteToken} />
 
       <div className="grid md:grid-cols-2 gap-8">
         <div>

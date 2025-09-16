@@ -1257,6 +1257,7 @@ export namespace Prisma {
     id: string | null
     name: string | null
     userId: string | null
+    inviteToken: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -1265,6 +1266,7 @@ export namespace Prisma {
     id: string | null
     name: string | null
     userId: string | null
+    inviteToken: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -1273,6 +1275,7 @@ export namespace Prisma {
     id: number
     name: number
     userId: number
+    inviteToken: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -1283,6 +1286,7 @@ export namespace Prisma {
     id?: true
     name?: true
     userId?: true
+    inviteToken?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -1291,6 +1295,7 @@ export namespace Prisma {
     id?: true
     name?: true
     userId?: true
+    inviteToken?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -1299,6 +1304,7 @@ export namespace Prisma {
     id?: true
     name?: true
     userId?: true
+    inviteToken?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -1380,6 +1386,7 @@ export namespace Prisma {
     id: string
     name: string
     userId: string
+    inviteToken: string
     createdAt: Date
     updatedAt: Date
     _count: CampaignCountAggregateOutputType | null
@@ -1405,6 +1412,7 @@ export namespace Prisma {
     id?: boolean
     name?: boolean
     userId?: boolean
+    inviteToken?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     players?: boolean | Campaign$playersArgs<ExtArgs>
@@ -1416,6 +1424,7 @@ export namespace Prisma {
     id?: boolean
     name?: boolean
     userId?: boolean
+    inviteToken?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["campaign"]>
@@ -1424,6 +1433,7 @@ export namespace Prisma {
     id?: boolean
     name?: boolean
     userId?: boolean
+    inviteToken?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["campaign"]>
@@ -1432,11 +1442,12 @@ export namespace Prisma {
     id?: boolean
     name?: boolean
     userId?: boolean
+    inviteToken?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type CampaignOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "userId" | "createdAt" | "updatedAt", ExtArgs["result"]["campaign"]>
+  export type CampaignOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "userId" | "inviteToken" | "createdAt" | "updatedAt", ExtArgs["result"]["campaign"]>
   export type CampaignInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     players?: boolean | Campaign$playersArgs<ExtArgs>
     games?: boolean | Campaign$gamesArgs<ExtArgs>
@@ -1455,6 +1466,7 @@ export namespace Prisma {
       id: string
       name: string
       userId: string
+      inviteToken: string
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["campaign"]>
@@ -1885,6 +1897,7 @@ export namespace Prisma {
     readonly id: FieldRef<"Campaign", 'String'>
     readonly name: FieldRef<"Campaign", 'String'>
     readonly userId: FieldRef<"Campaign", 'String'>
+    readonly inviteToken: FieldRef<"Campaign", 'String'>
     readonly createdAt: FieldRef<"Campaign", 'DateTime'>
     readonly updatedAt: FieldRef<"Campaign", 'DateTime'>
   }
@@ -5656,6 +5669,7 @@ export namespace Prisma {
     id: 'id',
     name: 'name',
     userId: 'userId',
+    inviteToken: 'inviteToken',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -5777,6 +5791,7 @@ export namespace Prisma {
     id?: StringFilter<"Campaign"> | string
     name?: StringFilter<"Campaign"> | string
     userId?: StringFilter<"Campaign"> | string
+    inviteToken?: StringFilter<"Campaign"> | string
     createdAt?: DateTimeFilter<"Campaign"> | Date | string
     updatedAt?: DateTimeFilter<"Campaign"> | Date | string
     players?: PlayerListRelationFilter
@@ -5787,6 +5802,7 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     userId?: SortOrder
+    inviteToken?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     players?: PlayerOrderByRelationAggregateInput
@@ -5795,6 +5811,7 @@ export namespace Prisma {
 
   export type CampaignWhereUniqueInput = Prisma.AtLeast<{
     id?: string
+    inviteToken?: string
     AND?: CampaignWhereInput | CampaignWhereInput[]
     OR?: CampaignWhereInput[]
     NOT?: CampaignWhereInput | CampaignWhereInput[]
@@ -5804,12 +5821,13 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"Campaign"> | Date | string
     players?: PlayerListRelationFilter
     games?: GameListRelationFilter
-  }, "id">
+  }, "id" | "inviteToken">
 
   export type CampaignOrderByWithAggregationInput = {
     id?: SortOrder
     name?: SortOrder
     userId?: SortOrder
+    inviteToken?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: CampaignCountOrderByAggregateInput
@@ -5824,6 +5842,7 @@ export namespace Prisma {
     id?: StringWithAggregatesFilter<"Campaign"> | string
     name?: StringWithAggregatesFilter<"Campaign"> | string
     userId?: StringWithAggregatesFilter<"Campaign"> | string
+    inviteToken?: StringWithAggregatesFilter<"Campaign"> | string
     createdAt?: DateTimeWithAggregatesFilter<"Campaign"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Campaign"> | Date | string
   }
@@ -6012,6 +6031,7 @@ export namespace Prisma {
     id?: string
     name: string
     userId: string
+    inviteToken?: string
     createdAt?: Date | string
     updatedAt?: Date | string
     players?: PlayerCreateNestedManyWithoutCampaignInput
@@ -6022,6 +6042,7 @@ export namespace Prisma {
     id?: string
     name: string
     userId: string
+    inviteToken?: string
     createdAt?: Date | string
     updatedAt?: Date | string
     players?: PlayerUncheckedCreateNestedManyWithoutCampaignInput
@@ -6032,6 +6053,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
+    inviteToken?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     players?: PlayerUpdateManyWithoutCampaignNestedInput
@@ -6042,6 +6064,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
+    inviteToken?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     players?: PlayerUncheckedUpdateManyWithoutCampaignNestedInput
@@ -6052,6 +6075,7 @@ export namespace Prisma {
     id?: string
     name: string
     userId: string
+    inviteToken?: string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -6060,6 +6084,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
+    inviteToken?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -6068,6 +6093,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
+    inviteToken?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -6297,6 +6323,7 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     userId?: SortOrder
+    inviteToken?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -6305,6 +6332,7 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     userId?: SortOrder
+    inviteToken?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -6313,6 +6341,7 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     userId?: SortOrder
+    inviteToken?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -7010,6 +7039,7 @@ export namespace Prisma {
     id?: string
     name: string
     userId: string
+    inviteToken?: string
     createdAt?: Date | string
     updatedAt?: Date | string
     games?: GameCreateNestedManyWithoutCampaignInput
@@ -7019,6 +7049,7 @@ export namespace Prisma {
     id?: string
     name: string
     userId: string
+    inviteToken?: string
     createdAt?: Date | string
     updatedAt?: Date | string
     games?: GameUncheckedCreateNestedManyWithoutCampaignInput
@@ -7090,6 +7121,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
+    inviteToken?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     games?: GameUpdateManyWithoutCampaignNestedInput
@@ -7099,6 +7131,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
+    inviteToken?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     games?: GameUncheckedUpdateManyWithoutCampaignNestedInput
@@ -7149,6 +7182,7 @@ export namespace Prisma {
     id?: string
     name: string
     userId: string
+    inviteToken?: string
     createdAt?: Date | string
     updatedAt?: Date | string
     players?: PlayerCreateNestedManyWithoutCampaignInput
@@ -7158,6 +7192,7 @@ export namespace Prisma {
     id?: string
     name: string
     userId: string
+    inviteToken?: string
     createdAt?: Date | string
     updatedAt?: Date | string
     players?: PlayerUncheckedCreateNestedManyWithoutCampaignInput
@@ -7230,6 +7265,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
+    inviteToken?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     players?: PlayerUpdateManyWithoutCampaignNestedInput
@@ -7239,6 +7275,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
+    inviteToken?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     players?: PlayerUncheckedUpdateManyWithoutCampaignNestedInput
