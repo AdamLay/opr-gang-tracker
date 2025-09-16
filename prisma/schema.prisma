@@ -1,0 +1,66 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "./generated/client"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model Campaign {
+  id        String   @id @default(cuid())
+  name      String
+  userId    String // Supabase auth user ID
+  players   Player[]
+  games     Game[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("campaigns")
+}
+
+model Player {
+  id         String       @id @default(cuid())
+  name       String
+  listUrl    String
+  userId     String // Supabase auth user ID
+  campaign   Campaign     @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+  campaignId String
+  games      GamePlayer[]
+  wonGames   Game[]       @relation("Winner")
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime     @updatedAt
+
+  @@map("players")
+}
+
+model Game {
+  id         String       @id @default(cuid())
+  campaign   Campaign     @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+  campaignId String
+  players    GamePlayer[]
+  winner     Player?      @relation("Winner", fields: [winnerId], references: [id])
+  winnerId   String?
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime     @updatedAt
+
+  @@map("games")
+}
+
+model GamePlayer {
+  id       String @id @default(cuid())
+  game     Game   @relation(fields: [gameId], references: [id], onDelete: Cascade)
+  gameId   String
+  player   Player @relation(fields: [playerId], references: [id], onDelete: Cascade)
+  playerId String
+
+  @@map("game_players")
+}
