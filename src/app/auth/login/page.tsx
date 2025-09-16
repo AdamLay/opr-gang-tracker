@@ -5,6 +5,7 @@ interface LoginPageProps {
   searchParams: {
     message?: string;
     error?: string;
+    returnUrl?: string;
   };
 }
 
@@ -35,6 +36,7 @@ export default function LoginPage({ searchParams }: LoginPageProps) {
         )}
 
         <form className="mt-8 space-y-6" action={loginAction}>
+          {searchParams.returnUrl && <input type="hidden" name="returnUrl" value={searchParams.returnUrl} />}
           <div className="space-y-4">
             <div>
               <label htmlFor="email" className="block text-sm font-medium text-gray-700">

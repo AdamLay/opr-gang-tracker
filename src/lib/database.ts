@@ -54,6 +54,31 @@ export async function getCampaign(id: string, userId: string) {
   });
 }
 
+// Get campaign with player access (readonly for non-owners)
+export async function getCampaignWithAccess(id: string, userId: string) {
+  return await prisma.campaign.findFirst({
+    where: {
+      OR: [
+        { id: id, userId: userId }, // Owner access
+        {
+          id: id,
+          players: {
+            some: { userId: userId },
+          },
+        }, // Player access
+      ],
+    },
+    include: {
+      players: true,
+      games: {
+        include: {
+          winner: true,
+        },
+      },
+    },
+  });
+}
+
 // Get campaign by invite token (public access)
 export async function getCampaignByInviteToken(inviteToken: string) {
   return await prisma.campaign.findUnique({
@@ -69,7 +94,7 @@ export async function getCampaignByInviteToken(inviteToken: string) {
 // Join campaign with invite token (no userId required)
 export async function joinCampaignWithToken(
   inviteToken: string,
-  playerData: { name: string; listUrl: string }
+  playerData: { name: string; listUrl: string; userId: string }
 ) {
   const campaign = await getCampaignByInviteToken(inviteToken);
   if (!campaign) {
@@ -81,7 +106,7 @@ export async function joinCampaignWithToken(
       name: playerData.name,
       listUrl: playerData.listUrl,
       campaignId: campaign.id,
-      userId: "", // No userId for public joins
+      userId: playerData.userId, // Now uses the authenticated user's ID
     },
   });
 }

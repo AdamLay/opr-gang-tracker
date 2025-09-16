@@ -26,6 +26,7 @@ export default async function CampaignPage({ params }: CampaignPageProps) {
   }
 
   const campaign = result.data!;
+  const isOwner = result.isOwner!;
 
   // Add Game Dialog State (client component)
   // DaisyUI modal/dialog pattern
@@ -40,7 +41,8 @@ export default async function CampaignPage({ params }: CampaignPageProps) {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <AddGameDialog campaignId={campaign.id} players={campaign.players} />
+      {/* Show Add Game Dialog only for owners */}
+      {isOwner && <AddGameDialog campaignId={campaign.id} players={campaign.players} />}
 
       <div className="flex justify-between items-start mb-6">
         <div>
@@ -48,22 +50,46 @@ export default async function CampaignPage({ params }: CampaignPageProps) {
             ← Back to Campaigns
           </Link>
           <h1 className="text-3xl font-bold">{campaign.name}</h1>
-          <p className="text-gray-600 mt-2">Created: {new Date(campaign.createdAt).toLocaleDateString()}</p>
+          <div className="flex items-center gap-2 mt-2">
+            <p className="text-gray-600">Created: {new Date(campaign.createdAt).toLocaleDateString()}</p>
+            {!isOwner && <span className="badge badge-info">Member</span>}
+          </div>
         </div>
-        <form action={deleteCampaign}>
-          <input type="hidden" name="id" value={campaign.id} />
-          <button type="submit" className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700">
-            Delete Campaign
-          </button>
-        </form>
+        {/* Show delete button only for owners */}
+        {isOwner && (
+          <form action={deleteCampaign}>
+            <input type="hidden" name="id" value={campaign.id} />
+            <button type="submit" className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700">
+              Delete Campaign
+            </button>
+          </form>
+        )}
       </div>
 
-      <InviteLinkSection inviteToken={campaign.inviteToken} />
-
       <div className="grid md:grid-cols-2 gap-8">
-        <div>
-          <h2 className="text-xl font-semibold mb-4">Add New Player</h2>
-          <CreatePlayerForm campaignId={campaign.id} />
+        <div className="flex flex-col gap-4">
+          {/* Show owner-only sections */}
+          {isOwner && (
+            <>
+              <div className="card bg-base-200 shadow-sm p-4 flex flex-col gap-4">
+                <h2 className="text-xl font-semibold">Add New Player</h2>
+                <CreatePlayerForm campaignId={campaign.id} />
+              </div>
+              <InviteLinkSection inviteToken={campaign.inviteToken} />
+            </>
+          )}
+
+          {/* Show readonly message for non-owners */}
+          {!isOwner && (
+            <div className="card bg-base-100 shadow-sm p-4">
+              <div className="alert alert-info">
+                <span>
+                  You're viewing this campaign as a member. Only the campaign owner can add players and create
+                  games.
+                </span>
+              </div>
+            </div>
+          )}
         </div>
 
         <div>

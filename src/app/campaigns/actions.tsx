@@ -8,6 +8,7 @@ import {
   createCampaign as dbCreateCampaign,
   getAllCampaigns as dbGetAllCampaigns,
   getCampaign as dbGetCampaign,
+  getCampaignWithAccess as dbGetCampaignWithAccess,
   updateCampaign as dbUpdateCampaign,
   deleteCampaign as dbDeleteCampaign,
 } from "@/lib/database";
@@ -73,11 +74,19 @@ export async function getCampaignsAction() {
 export async function getCampaignAction(id: string) {
   try {
     const user = await getAuthenticatedUser();
-    const campaign = await dbGetCampaign(id, user.id);
+    const campaign = await dbGetCampaignWithAccess(id, user.id);
     if (!campaign) {
       return { success: false, error: "Campaign not found" };
     }
-    return { success: true, data: campaign };
+
+    // Determine if user is the owner
+    const isOwner = campaign.userId === user.id;
+
+    return {
+      success: true,
+      data: campaign,
+      isOwner,
+    };
   } catch (error) {
     console.error("Error fetching campaign:", error);
     return { success: false, error: "Failed to fetch campaign" };

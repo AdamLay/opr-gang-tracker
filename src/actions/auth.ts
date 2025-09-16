@@ -12,15 +12,21 @@ export async function loginAction(formData: FormData) {
     password: formData.get("password") as string,
   };
 
+  const returnUrl = formData.get("returnUrl") as string;
+
   const { error } = await supabase.auth.signInWithPassword(data);
 
   if (error) {
     console.error("Login error:", error);
-    redirect(`/auth/login?error=${encodeURIComponent(error.message)}`);
+    const errorParam = encodeURIComponent(error.message);
+    const returnParam = returnUrl ? `&returnUrl=${encodeURIComponent(returnUrl)}` : "";
+    redirect(`/auth/login?error=${errorParam}${returnParam}`);
   }
 
   revalidatePath("/", "layout");
-  redirect("/campaigns");
+
+  // Redirect to returnUrl if provided, otherwise to campaigns
+  redirect(returnUrl || "/campaigns");
 }
 
 export async function registerAction(formData: FormData) {
